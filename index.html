@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santa Tracker</title>
+<style>
+body {
+  text-align:center;
+  background:#001f3f;
+  color:white;
+  font-family:sans-serif;
+}
+#map-container {
+  position:relative;
+  width:100%;
+  max-width:1000px;
+  margin:auto;
+}
+#map-container img {
+  width:100%;
+}
+#santa {
+  position:absolute;
+  font-size:30px;
+}
+</style>
+</head>
+<body>
+
+<h1>🎅 Santa Tracker</h1>
+
+<div id="map-container">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
+  <div id="santa">🎅</div>
+</div>
+
+<script>
+const santa = document.getElementById("santa");
+
+let path = [
+  {x:50,y:200},
+  {x:150,y:180},
+  {x:300,y:220},
+  {x:450,y:200},
+  {x:600,y:250},
+  {x:800,y:200}
+];
+
+let i=0;
+let next=1;
+let progress=0;
+
+function move(){
+  const current=path[i];
+  const nextPoint=path[next];
+
+  const x=current.x+(nextPoint.x-current.x)*progress;
+  const y=current.y+(nextPoint.y-current.y)*progress;
+
+  santa.style.left=x+"px";
+  santa.style.top=y+"px";
+
+  progress+=0.01;
+
+  if(progress>=1){
+    progress=0;
+    i=next;
+    next++;
+    if(next>=path.length) next=0;
+  }
+
+  requestAnimationFrame(move);
+}
+
+move();
+</script>
+
+</body>
+</html>
